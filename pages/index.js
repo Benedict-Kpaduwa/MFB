@@ -161,7 +161,7 @@ export default function Home() {
             <div className="grid grid-cols-3 gap-2">
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex flex-row font-bold items-center space-x-5">
-                  <span className='text-2xl'>Full GreenHouse</span>
+                  <span className='text-2xl text-gray-300'>Full GreenHouse</span>
 
                   <input
                     className="mr-2 leading-tight"
@@ -175,7 +175,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Perfect Ramen</span>
+                  <span className='text-2xl text-gray-300'>Perfect Ramen</span>
                   <input
                     className="mr-2 leading-tight"
                     type="checkbox"
@@ -188,7 +188,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Brutalist Space</span>
+                  <span className='text-2xl text-gray-300'>Brutalist Space</span>
 
                   <input
                     className="mr-2 leading-tight"
@@ -202,7 +202,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Full underpass</span>
+                  <span className='text-2xl text-gray-300'>Full underpass</span>
 
                   <input
                     className="mr-2 leading-tight"
@@ -216,7 +216,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>The Real hidden denza</span>
+                  <span className='text-2xl text-gray-300'>The Real hidden denza</span>
 
                   <input
                     className="mr-2 leading-tight"
@@ -230,7 +230,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Full Convenience Store</span>
+                  <span className='text-2xl text-gray-300'>Full Convenience Store</span>
 
                   <input
                     className="mr-2 leading-tight"
@@ -244,7 +244,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Water Elements</span>
+                  <span className='text-2xl text-gray-300'>Water Elements</span>
                   <input
                     className="mr-2 leading-tight"
                     type="checkbox"
@@ -257,7 +257,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Cat's Dinner Bowl</span>
+                  <span className='text-2xl text-gray-300'>Cat's Dinner Bowl</span>
 
                   <input
                     type="checkbox"
@@ -270,7 +270,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Triple Pets</span>
+                  <span className='text-2xl text-gray-300'>Triple Pets</span>
 
                   <input
                     type="checkbox"
@@ -283,7 +283,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Public Transport</span>
+                  <span className='text-2xl text-gray-300'>Public Transport</span>
 
                   <input
                     type="checkbox"
@@ -297,7 +297,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center justify-center p-4">
                 <label className="text-lg flex font-bold items-center space-x-7">
-                  <span className='text-2xl'>Tropical</span>
+                  <span className='text-2xl text-gray-300'>Tropical</span>
 
                   <input
                     type="checkbox"
@@ -342,22 +342,30 @@ export default function Home() {
  
           </div>
           <div className='flex flex-row gap-x-3 mx-auto items-center'>
-              {page > 1 && (
-                <button onClick={() => goToPage(page - 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">Prev</button>
-              )}
-              {page > 2 && (
-                <button onClick={() => goToPage(1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">1</button>
-              )}
-              {page > 3 && (
-                <span>...</span>
-              )}
+            {page > 1 && (
+              <button onClick={() => goToPage(page - 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">Prev</button>
+            )}
+            {page > 2 && (
+              <button onClick={() => goToPage(1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">1</button>
+            )}
+            {page > 3 && (
+              <span>...</span>
+            )}
+            {page > 1 && (
               <button onClick={() => goToPage(page - 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">{page - 1}</button>
-              <button disabled className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">{page}</button>
+            )}
+            <button disabled className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">{page}</button>
+            {page < Math.ceil(json?.length / pageSize) && (
               <button onClick={() => goToPage(page + 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">{page + 1}</button>
-              {page < Math.ceil(json?.length / pageSize) && (
-                <button onClick={() => goToPage(page + 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">Next</button>
-              )}
-            </div>
+            )}
+            {page < Math.ceil(json?.length / pageSize) - 1 && (
+              <span>...</span>
+            )}
+            {page < Math.ceil(json?.length / pageSize) && (
+              <button onClick={() => goToPage(page + 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">Next</button>
+            )}
+          </div>
+
         </div>
 
       </HomePageWrapper>
