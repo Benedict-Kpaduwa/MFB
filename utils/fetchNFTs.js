@@ -1,9 +1,9 @@
 // Go to www.alchemy.com and create an account to grab your own api key!
-const apiKey = "sp9m944CEohM3rpBayqMbJnJoVLHboxB"
+const apiKey = "B2U65ar4uu1PSKlt0cnFC9LuL3yCLYRc"
 const endpoint = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}`;
 //const contractAddr = "0xd9c036e9eef725e5aca4a22239a23feb47c3f05d";
 
-const getAddressNFTs = async (owner, contractAddress, retryAttempt) => {
+const getAddressNFTs = async (owner, contractAddr, retryAttempt) => {
     if (retryAttempt === 5) {
         return;
     }
@@ -12,7 +12,7 @@ const getAddressNFTs = async (owner, contractAddress, retryAttempt) => {
         try {
             if (contractAddr) {
                
-                data = await fetch(`${endpoint}/getNFTs?owner=${owner}&contractAddresses[]=${contractAddress}&withMetadata=false`).then(data => data.json())
+                data = await fetch(`${endpoint}/getNFTs?owner=${owner}&contractAddresses[]=${contractAddr}&withMetadata=false`).then(data => data.json())
                // console.log(data)
             } else {
                 data = await fetch(`${endpoint}/getNFTs?owner=${owner}`).then(data => data.json())
@@ -34,6 +34,8 @@ const getNFTsMetadata = async (NFTS) => {
          /* console.log("metadata", metadata)
          console.log(metadata.attributes)*/
          imageUrl = metadata.image
+          
+     
 
 
         return {
@@ -47,13 +49,13 @@ const getNFTsMetadata = async (NFTS) => {
     }))
 
     return NFTsMetadata
-} 
+}
 
 const fetchNFTs = async (owner, contractAddress, setNFTs) => {
     try {
     const data = await getAddressNFTs(owner, contractAddress)
-    if (data?.ownedNfts?.length) {
-        const NFTs = await getNFTsMetadata(data?.ownedNfts)
+    if (data.ownedNfts.length) {
+        const NFTs = await getNFTsMetadata(data.ownedNfts)
         let fullfilledNFTs = NFTs.filter(NFT => NFT.status === "fulfilled")
         setNFTs(fullfilledNFTs)
     } else {
