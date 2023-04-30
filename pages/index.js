@@ -6,7 +6,6 @@ import {
 } from "../styles/HomeStyles";
 import GalleryCard from '../components/GalleryCard';
 import { useRouter } from 'next/router'
-import Modal from 'react-modal'
 
 const contractAddr = "0xD9c036e9EEF725E5AcA4a22239A23feb47c3f05d";
 
@@ -15,8 +14,8 @@ export default function Home() {
   const [page, setPage] = useState(1)
   const pageSize = 50
   const [json, setJson] = useState([])
-  const [length, setLength] = useState(0)
   const [results, setResults] = useState([]);
+  const [filteredResults, setFilteredResults] = useState([])
   const [ownerAddress, setOwnerAddress] = useState('');
 
   const [checkedBoxes, setCheckedBoxes] = useState({
@@ -133,9 +132,9 @@ export default function Home() {
 
   useEffect(() => {
     const filteredResult = json.filter((item) => checkConditions(item));
-    setResults(filteredResult);
+    setFilteredResults(filteredResult);
     console.log(filteredResult)
-  }, [checkedBoxes, json]);
+  }, [checkedBoxes]);
   
   // const filterResults = () => {
   //   const filteredResult = json.filter((item) => checkConditions(item));
@@ -275,57 +274,31 @@ export default function Home() {
                 </div>
 
               </div>
-
-              <div className='flex flex-col space-y-1'>
-                <input className="border focus:outline-none py-2 px-3 flex justify-center rounded-lg w-full h-20 placeholder:text-lg" value={ownerAddress} onChange={(e) => setOwnerAddress(e.target.value)} placeholder='Insert your wallet address'></input>
-                <div className='border-2 border-black bg-blue-600 flex items-center p-2 mt-[100px] rounded-lg'>
-                  <button 
-                    className='flex items-center text-center justify-center mx-auto'
-                    onClick={()=>{fetchNFTs(ownerAddress, contractAddr, setResults)}}
-                  > 
-                    Get My NFTS
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
-         
-          <div className="flex flex-col items-center justify-center space-y-5 w-1/2 absolute top-[150px] right-[250px]">
-            {results ? results.map((item) => (
+
+          
+          <div className='flex flex-col space-y-1 absolute left-[500px] top-[150px] w-[400px]'>
+            <input className="border focus:outline-none py-2 px-3 flex justify-center rounded-lg w-full h-20 placeholder:text-lg" value={ownerAddress} onChange={(e) => setOwnerAddress(e.target.value)} placeholder='Insert your wallet address'></input>
+            <div className='border-2 border-black bg-blue-600 flex items-center p-2 mt-[100px] rounded-lg'>
+              <button 
+                className='flex items-center text-center justify-center mx-auto'
+                onClick={()=>{fetchNFTs(ownerAddress, contractAddr, setFilteredResults)}}
+              > 
+                Get My NFTS
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center justify-center space-y-5 w-1/3 absolute top-[150px] right-[250px]">
+            {filteredResults.map((item) => (
               <div key={item.id}>
                 <GalleryCard image={item.image} name={item.name} id={item.id} contractAddress={contractAddr}/>
               </div>
-            )): <h1 className='text-gray-100 3xl flex justify-center'>No NFTs found</h1>}
-            {/* <div className='flex flex-row gap-x-3 mx-auto items-center'>
-              {page > 1 && (
-                <button onClick={() => goToPage(page - 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">Prev</button>
-              )}
-              {page > 2 && (
-                <button onClick={() => goToPage(1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">1</button>
-              )}
-              {page > 3 && (
-                <span>...</span>
-              )}
-              {page > 1 && (
-                <button onClick={() => goToPage(page - 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">{page - 1}</button>
-              )}
-              <button disabled className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">{page}</button>
-              {page < Math.ceil(json?.length / pageSize) && (
-                <button onClick={() => goToPage(page + 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">{page + 1}</button>
-              )}
-              {page < Math.ceil(json?.length / pageSize) - 1 && (
-                <span>...</span>
-              )}
-              {page < Math.ceil(json?.length / pageSize) && (
-                <button onClick={() => goToPage(page + 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">Next</button>
-              )}
-          </div> */}
- 
+            ))}
+            
           </div>
-          
-
         </div>
-
       </HomePageWrapper>
 
     </div>
