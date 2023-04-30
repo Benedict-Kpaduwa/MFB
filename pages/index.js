@@ -17,9 +17,7 @@ export default function Home() {
   const [json, setJson] = useState([])
   const [length, setLength] = useState(0)
   const [results, setResults] = useState([]);
-  const [show, setShow] = useState(false)
   const [ownerAddress, setOwnerAddress] = useState('');
-  const [contractAddress, setContractAddress] = useState("")
 
   const [checkedBoxes, setCheckedBoxes] = useState({
     fullGreenHouse: false,
@@ -35,13 +33,7 @@ export default function Home() {
     tropical: false
   });
 
-  const handleOpenModal = () => {
-    setShow(true);
-  };
 
-  const handleCloseModal = () => {
-    setShow(false);
-  };
   
   useEffect(() => {
     const fetchData = async () => {
@@ -142,16 +134,14 @@ export default function Home() {
   useEffect(() => {
     const filteredResult = json.filter((item) => checkConditions(item));
     setResults(filteredResult);
-    setLength(filteredResult.length);
     console.log(filteredResult)
   }, [checkedBoxes, json]);
   
-  const filterResults = () => {
-    const filteredResult = json.filter((item) => checkConditions(item));
-    setResults(filteredResult);
-    setLength(filteredResult.length)
-    // console.log(filteredResult)
-  };
+  // const filterResults = () => {
+  //   const filteredResult = json.filter((item) => checkConditions(item));
+  //   setResults(filteredResult);
+  //   // console.log(filteredResult)
+  // };
 
   return (
     <div>
@@ -297,40 +287,15 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              
-              
-              {/* <div className='flex justify-center'>
-                <button
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300"
-                  onClick={filterResults}
-                >
-                  Filter By Trait Combinations
-                </button>
-              </div> */}
             </div>
           </div>
-          {/* <div className='flex flex-col w-1/2 justify-center items-center mx-auto space-y-5'>
-            <input className="border focus:outline-none py-2 px-3 flex justify-center rounded-lg w-full" value={ownerAddress} onChange={(e) => setOwnerAddress(e.target.value)} placeholder='Insert your wallet address'></input>
-            <input className="border focus:outline-none py-2 px-3 flex justify-center rounded-lg w-full" value={contractAddress} onChange={(e) => setContractAddress(e.target.value)} placeholder='Insert your NFT address'></input>
-            <div className='flex justify-center'>
-              <button
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300"
-                onClick={()=>{fetchNFTs(ownerAddress, contractAddress, setResults)}}
-              >
-                Get My NFTS
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <span>Total Combinations: {length}</span>
-          </div> */}
+         
           <div className="flex flex-col items-center justify-center space-y-5 w-1/2 absolute top-[150px] right-[250px]">
             {results ? results.map((item) => (
               <div key={item.id}>
                 <GalleryCard image={item.image} name={item.name} id={item.id} contractAddress={contractAddr}/>
               </div>
-            )): <div>No NFTs found</div>}
+            )): <h1 className='text-gray-100 3xl flex justify-center'>No NFTs found</h1>}
             {/* <div className='flex flex-row gap-x-3 mx-auto items-center'>
               {page > 1 && (
                 <button onClick={() => goToPage(page - 1)} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-colors duration-300">Prev</button>
