@@ -136,12 +136,6 @@ export default function Home() {
     console.log(filteredResult)
   }, [checkedBoxes]);
   
-  // const filterResults = () => {
-  //   const filteredResult = json.filter((item) => checkConditions(item));
-  //   setResults(filteredResult);
-  //   // console.log(filteredResult)
-  // };
-
   return (
     <div>
       <Head>
@@ -296,7 +290,6 @@ export default function Home() {
                 <GalleryCard image={item.image} name={item.name} id={item.id} contractAddress={contractAddr}/>
               </div>
             ))}
-            
           </div>
         </div>
       </HomePageWrapper>

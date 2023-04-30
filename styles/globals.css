@@ -81,28 +81,3 @@ input[type="checkbox"] {
 input[type="checkbox"]:checked {
   background-color: #2196F3;
 }
-
-
-.Modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline: none;
-  padding: 20px;
-  width: 300px; /* Adjust the width as needed */
-  height: 150px; /* Adjust the height as needed */
-}
-
-/* Input box styles */
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
