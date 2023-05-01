@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import { fetchNFTs } from '../utils/fetchNFTs';
+import { fetchNFTs, getNFTsMetadata } from '../utils/fetchNFTs';
 import {
   HomePageWrapper
 } from "../styles/HomeStyles";
@@ -12,9 +12,7 @@ const contractAddr = "0xD9c036e9EEF725E5AcA4a22239A23feb47c3f05d";
 export default function Home() {
   const router = useRouter()
   const [page, setPage] = useState(1)
-  const pageSize = 50
   const [json, setJson] = useState([])
-  const [results, setResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([])
   const [ownerAddress, setOwnerAddress] = useState('');
 
@@ -40,22 +38,26 @@ export default function Home() {
       const json = await response.json()
       setJson(json)
 
-      const startIndex = (page - 1) * pageSize
-      const endIndex = startIndex + pageSize
-      const filteredData = json.slice(startIndex, endIndex)
-      setResults(filteredData)
+      // const startIndex = (page - 1) * pageSize
+      // const endIndex = startIndex + pageSize
+      // const filteredData = json.slice(startIndex, endIndex)
+      // setResults(filteredData)
     }
 
     fetchData()
   }, [router.query, page])
 
-  const goToPage = (pageNumber) => {
-    setPage(pageNumber)
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, page: pageNumber }
-    })
-  }
+  useEffect(() => {
+    getNFTsMetadata(filteredResults)
+  },[])
+
+  // const goToPage = (pageNumber) => {
+  //   setPage(pageNumber)
+  //   router.push({
+  //     pathname: router.pathname,
+  //     query: { ...router.query, page: pageNumber }
+  //   })
+  // }
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
@@ -154,12 +156,12 @@ export default function Home() {
 
 
       <HomePageWrapper >
-        <div className='flex flex-row gap-5'>
-          <div>
-            <div className="h-screen bg-gray-200 p-8 w-[400px] fixed left-0 top-[106px]">
+        <div className='flex'>
+          <div className="flex flex-col h-screen md:flex-row">
+            <div className="bg-gray-200 p-8 sidebar">
               <h1 className='text-black'>FILTERS</h1>
 
-              <div className='w-full space-y-10 my-5'>
+              <div className='w-full space-y-2 my-2'>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
                     className="mr-2 leading-tight"
@@ -168,7 +170,7 @@ export default function Home() {
                     checked={checkedBoxes.fullGreenHouse}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Full GreenHouse</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Full GreenHouse</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'> 
                   <input
@@ -178,7 +180,7 @@ export default function Home() {
                     checked={checkedBoxes.perfectRamen}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Perfect Ramen</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Perfect Ramen</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -188,7 +190,7 @@ export default function Home() {
                     checked={checkedBoxes.brutalistSpace}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Brutalist Space</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Brutalist Space</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -198,7 +200,7 @@ export default function Home() {
                     checked={checkedBoxes.fullUnderpass}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Full underpass</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Full underpass</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -208,7 +210,7 @@ export default function Home() {
                     checked={checkedBoxes.theRealhiddendenza}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>The Real Hidden Denza</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>The Real Hidden Denza</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -218,7 +220,7 @@ export default function Home() {
                     checked={checkedBoxes.fullConvenienceStore}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Full Convenience Store</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Full Convenience Store</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -228,7 +230,7 @@ export default function Home() {
                     checked={checkedBoxes.waterElements}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Water Elements</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Water Elements</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -237,7 +239,7 @@ export default function Home() {
                     checked={checkedBoxes.catDinnerBowl}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Cat's Dinner Bowl</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Cat's Dinner Bowl</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -246,7 +248,7 @@ export default function Home() {
                     checked={checkedBoxes.triplePets}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Triple Pets</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Triple Pets</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -255,7 +257,7 @@ export default function Home() {
                     checked={checkedBoxes.publicTransport}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Public Transport</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Public Transport</span>
                 </div>
                 <div className='flex flex-row items-center space-x-5'>
                   <input
@@ -264,33 +266,44 @@ export default function Home() {
                     checked={checkedBoxes.tropical}
                     onChange={handleCheckboxChange}
                   />
-                  <span className='text-4xl text-gray-900'>Tropical</span>
+                  <span className='lg:text-lg md:text-lg sm:text-xs text-gray-900'>Tropical</span>
                 </div>
 
+                <div className="flex flex-col space-y-2 my-2">
+                  <label  className="lg:text-lg md:text-lg sm:text-xs text-gray-900">Enter Your Wallet Address</label>
+                  <div className="flex lg:flex-row md:flex-col sm:flex-col items-center">
+                    <input
+                      className="mr-2 leading-tight border border-gray-500 px-2 py-1 rounded-md"
+                      type="text"
+                      value={ownerAddress} 
+                      onChange={(e) => setOwnerAddress(e.target.value)}
+                      placeholder='Enter Wallet Address'
+                    />
+                    <button 
+                      onClick={() => {fetchNFTs(ownerAddress, contractAddr, setFilteredResults)}} 
+                      className="p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                    > 
+                      Add
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          
-          <div className='flex flex-col space-y-1 absolute left-[500px] top-[150px] w-[400px]'>
-            <input className="border focus:outline-none py-2 px-3 flex justify-center rounded-lg w-full h-20 placeholder:text-lg" value={ownerAddress} onChange={(e) => setOwnerAddress(e.target.value)} placeholder='Insert your wallet address'></input>
-            <div className='border-2 border-black bg-blue-600 flex items-center p-2 mt-[100px] rounded-lg'>
-              <button 
-                className='flex items-center text-center justify-center mx-auto'
-                onClick={()=>{fetchNFTs(ownerAddress, contractAddr, setFilteredResults)}}
-              > 
-                Get My NFTS
-              </button>
+          <div className="main-content w-full">
+            <div className="flex flex-col items-center p-8 w-full">
+              <div className='bg-black sticky top-0'>
+                <h1 className="text-4xl font-bold mb-8 ">My NFTs: {filteredResults?.length}</h1>
+              </div>
+              <div className="w-full space-y-8 flex flex-col">
+                {filteredResults ? filteredResults?.map((item) => (
+                  <GalleryCard key={item.id} image={item.image} name={item.name} id={item.id} contractAddress={contractAddr} />
+                )): <h1>You Have No NFTS</h1>}
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center space-y-5 w-1/3 absolute top-[150px] right-[250px]">
-            {filteredResults.map((item) => (
-              <div key={item.id}>
-                <GalleryCard image={item.image} name={item.name} id={item.id} contractAddress={contractAddr}/>
-              </div>
-            ))}
-          </div>
         </div>
       </HomePageWrapper>
 
